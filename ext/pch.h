@@ -14,6 +14,8 @@
 #include <functional>
 #include <list>
 #include <numeric>
+#include <map>
+#include <set>
 
 #if defined (_WIN32)
 #include <Windows.h>
