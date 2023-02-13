@@ -68,21 +68,25 @@ int main(int, char**) {
         for (int i = 0; i < sz; ++i) {
             const auto &ip = listIpV4.at(i);
 
-            if (ip.o1 == 1)
+            if (ip.oct1() == 1)
                 ssIp1 << ip << "\n";
 
-            if (ip.o1 == 46 && ip.o2 == 70)
+            if (ip.oct1() == 46 && ip.oct2() == 70)
                 ssIp46_70 << ip << "\n";
 
-            if (ip.o1 == 46 || ip.o2 == 46 || ip.o3 == 46 || ip.o4 == 46)
+            if (ip.oct1() == 46 || ip.oct2() == 46 || ip.oct3() == 46 || ip.oct4() == 46)
                 ssIp46Any << ip << "\n";
 
             std::cout << ip << std::endl;
         }
         
-        std::cout   << rtrim(ssIp1.str()) << "\n"
-                    << rtrim(ssIp46_70.str()) << "\n"
-                    << rtrim(ssIp46Any.str()) << std::endl;
+        auto ssIp1Str = ssIp1.str();
+        auto ssIp46_70Str = ssIp46_70.str();
+        auto ssIp46AnyStr = ssIp46Any.str();
+
+        std::cout   << rtrim(ssIp1Str) << "\n"
+                    << rtrim(ssIp46_70Str) << "\n"
+                    << rtrim(ssIp46AnyStr) << std::endl;
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
