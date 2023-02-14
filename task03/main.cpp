@@ -1,6 +1,7 @@
 #include "../ext/pch.h"
 #include "Utils.h"
 #include "CLinkedList.h"
+#include "CCustomAllocator.h"
 
 static constexpr auto kCountElements = 10;  // max 10 elements
 

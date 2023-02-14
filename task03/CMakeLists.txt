@@ -7,7 +7,7 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-set(SRC_HEADERS ../ext/pch.h CLinkedList.h)
+set(SRC_HEADERS ../ext/pch.h CCustomAllocator.h CLinkedList.h)
 set(SRC_SOURCES main.cpp)
 
 add_executable(${PROJECT_NAME} ${SRC_HEADERS} ${SRC_SOURCES})
