@@ -19,8 +19,14 @@ class CLinkedList
 
 public:
     template <typename TValue>
-    struct SIterator : public std::iterator<std::input_iterator_tag, T>
+    struct SIterator
     {
+        typedef std::input_iterator_tag iterator_category;
+        typedef TValue value_type;
+        typedef TValue * pointer;
+        typedef TValue & reference;
+        typedef ptrdiff_t difference_type;
+
         friend class CLinkedList;
         SIterator() = default;
         SIterator(const SIterator &other)
