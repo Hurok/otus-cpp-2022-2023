@@ -1,4 +1,4 @@
-#ifndefr CLIST_H
+#ifndef CLIST_H
 #define CLIST_H
 
 #include <memory>
@@ -7,7 +7,7 @@ template <typename T>
 class CList
 {
     struct SNode {
-        T *data = nullptr;
+        T data;
         T *next = nullptr;
     };
 
@@ -16,7 +16,7 @@ public:
     CList(const CList &other) 
         : m_size(other.m_size)
     {
-        auto ptr = other.m_data;
+        auto ptr = other.m_head;
         while (ptr) {
             /*auto node = new SNode{};
 
@@ -36,7 +36,7 @@ public:
         if (idx >= size())
             throw std::out_of_range("");
 
-        SNode *ptr = m_data;
+        SNode *ptr = m_head;
         for (std::size_t i = 1; i < idx; ++i) {
             ptr = ptr->next;
         }
@@ -50,7 +50,7 @@ public:
 
     void clear() noexcept {
         if (!empty()) {
-            SNode *ptr = m_data;
+            SNode *ptr = m_head;
             while (ptr) {
                 auto ptrNext = ptr->next;
                 delete ptr;
@@ -62,7 +62,15 @@ public:
     }
 
 private:
-    SNode *m_data = nullptr;
+    void crateNewNode(const T &val) noexcept {
+        auto node = new SNode{};
+        node->data = val;
+        node->next = nullptr;
+
+        
+    }
+
+    SNode *m_head = nullptr;
     std::size_t m_size = 0;
 };
 
