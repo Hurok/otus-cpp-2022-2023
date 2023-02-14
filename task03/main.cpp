@@ -1,34 +1,8 @@
 #include "../ext/pch.h"
+#include "Utils.h"
+#include "CLinkedList.h"
 
 static constexpr auto kCountElements = 10;  // max 10 elements
-
-int fact(int initVal)
-{
-    int res = 0;
-    if (initVal > 0) {
-        int res = 1;
-        for (auto i = 2; i < initVal; ++i) {
-            res *= i;
-        }
-    }
-
-    return res;
-}
-
-template <typename Container>
-void print(const Container &val) noexcept
-{
-    for (auto it = val.cbegin(); it != val.cend(); ++it) {
-        std::cout << *it << "\n";
-    }
-}
-
-void print(const std::map<int, int> &val) noexcept
-{
-    for (auto it = val.cbegin(); it != val.cend(); ++it) {       
-        std::cout << it->first << " " << it->second << "\n";
-    }
-}
 
 int main(int, char**) {   
     try {
@@ -38,7 +12,7 @@ int main(int, char**) {
             mapDefaultAllocator.emplace(std::make_pair(i, fact(i)));
         }
 
-        print(mapDefaultAllocator);
+        //print(mapDefaultAllocator);
 
         // 2 - custom allocator
         std::map<int, int> mapCustomAllocator;
@@ -46,10 +20,10 @@ int main(int, char**) {
             mapCustomAllocator.emplace(std::make_pair(i, fact(i)));
         }
 
-        print(mapCustomAllocator);
+        //print(mapCustomAllocator);
 
         // 3 - custom container
-        std::vector<int> customContainer;
+        CLinkedList<int> customContainer;
         for (int i = 0; i < kCountElements; ++i) {
             customContainer.push_back(i);
         }
@@ -62,7 +36,7 @@ int main(int, char**) {
             customContainerAlloc.push_back(i);
         }
 
-        print(customContainerAlloc);
+        //print(customContainerAlloc);
 
         std::cout.flush();
     } catch (std::exception &e) {

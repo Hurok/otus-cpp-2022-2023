@@ -16,6 +16,7 @@
 #include <numeric>
 #include <map>
 #include <set>
+#include <optional>
 
 #if defined (_WIN32)
 #include <Windows.h>
