@@ -53,4 +53,8 @@ inline std::string &trim(std::string &inOut) noexcept {
     return inOut;
 }
 
+#ifdef _MSC_VER 
+#define __PRETTY_FUNCTION__ __FUNCSIG__
+#endif
+
 #endif // !PHCHELPER_H

@@ -3,26 +3,49 @@
 
 #include <memory>
 
-template <typename T>
-class CCustomAllocator : public std::allocator<T>
+template <typename T, typename Allocator = std::allocator<T> >
+class CCustomAllocator
 {
 public:
-    typedef T value_type;
-    typedef T *pointer;
-    typedef const T * const_pointer;
-    typedef T &reference;
-    typedef const T &const_reference;
-    typedef std::size_t size_type;
-    typedef std::ptrdiff_t difference_type;
-    typedef std::true_type propagate_on_container_move_assignment;
-    typedef std::true_type is_always_equa;
+    using value_type = T;
 
-    pointer allocate(size_type n, const void * hint = 0) {
+    CCustomAllocator() = default;
+    ~CCustomAllocator() = default;
 
+    template <typename U>
+    struct rebind {
+        using other = CCustomAllocator<U>;
+    };
+
+    T *allocate (std::size_t count) {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+
+        auto ptr = std::malloc(sizeof(T) * count);
+        if (!ptr)
+            throw std::bad_alloc();
+
+        return reinterpret_cast<T *>(ptr);
     }
 
-    void deallocate(pointer ptr, size_type n) {
-        delete ptr;
+    void deallocate (T *ptr, std::size_t count) {
+        (void)count;
+        std::free(ptr);
+
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+    }
+
+    template <typename U, typename... Args>
+    void construct(U *ptr, Args &&...args) {
+        std::cout << __PRETTY_FUNCTION__ << std::endl;
+
+        new (ptr) U(std::forward<Args>(args)...);
+    }
+
+    template <typename U>
+    void destroy(U *ptr) {
+       std::cout <<  __PRETTY_FUNCTION__ << std::endl;
+
+        ptr->~U();
     }
 };
 
