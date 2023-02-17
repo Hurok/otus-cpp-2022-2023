@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0.0)
 set(PATCH_VERSION 1 CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
-set(BUILD_TASK1 OFF)    # done
+set(BUILD_TASK1 ON)    # done
 set(BUILD_TASK2 OFF)
 set(BUILD_TASK3 OFF)    # done
 set(BUILD_TASK4 OFF)

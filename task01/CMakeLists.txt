@@ -28,5 +28,5 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 set(CPACK_PACKAGE_CONTACT example@example.com)
 include (CPack)
-#enable_testing()
-#add_test(${PROJECT_NAME_TEST} ${PROJECT_NAME_TEST})
+enable_testing()
+add_test(${PROJECT_NAME_TEST} ${PROJECT_NAME_TEST})
