@@ -37,7 +37,7 @@ int main(int, char**) {
             customContainerAlloc.push_back(i);
         }
 
-        //print(customContainerAlloc);
+        print(customContainerAlloc);
         std::cout.flush();
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;

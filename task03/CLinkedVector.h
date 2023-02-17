@@ -6,6 +6,12 @@
 #include <memory>
 #include <cstring>
 
+/*!
+ * \brief "Односвязный вектор" для доступа к элементам по аналогии с односвязным списком.
+ * \param T - тип.
+ * \param Allocator - аллокатор памяти.
+ * \param ExtendElemCount - количество резервируемых элементов при разростании контейнера.
+ */
 template <typename T, typename Allocator = std::allocator<T>, int ExtendElemCount = 8 >
 class CLinkedVector
 {
@@ -79,8 +85,8 @@ public:
     }
 
     void clear() noexcept {
-        if (!empty()) {
-            for (std::size_t i; i < capacity(); ++i) {
+        if (capacity()) {
+            for (std::size_t i = 0; i < capacity(); ++i) {
                 m_data[i].~T();
             }
 
