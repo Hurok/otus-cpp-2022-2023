@@ -53,6 +53,8 @@ inline std::string &trim(std::string &inOut) noexcept {
     return inOut;
 }
 
+#define UNUSED(x) ((void)x)
+
 #ifdef _MSC_VER 
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif

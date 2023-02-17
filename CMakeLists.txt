@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-set(VERSION 0.0.2)
-set(BUILD_TASK1 OFF)
+set(VERSION 0.0.3)
+set(BUILD_TASK1 ON)
 set(BUILD_TASK2 OFF)
-set(BUILD_TASK3 ON)
+set(BUILD_TASK3 OFF)
 set(BUILD_TASK4 OFF)
 
 # 01 - hello_world
