@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <exception>
 #include <memory>
+#include <cstring>
 
 template <typename T, typename Allocator = std::allocator<T>, int ExtendElemCount = 8 >
 class CLinkedVector
@@ -32,7 +33,10 @@ public:
         }
 
         SIterator &operator ++ () {
-            m_data = m_data + 1;
+            if (m_data != m_last)
+                ++m_data;
+            else m_data = nullptr;
+
             return *this;
         }
 
@@ -41,30 +45,32 @@ public:
         }
 
     private:
-        SIterator(TValue *data)
-            : m_data(data)
+        SIterator(TValue *data, TValue *last)
+            : m_data(data),
+              m_last(last)
         { }
 
         TValue *m_data = nullptr;
+        TValue *m_last = nullptr;
     };
 
     typedef SIterator<T> iterator;
     typedef SIterator<const T> const_iterator;
 
     iterator begin() noexcept {
-        return iterator{ m_data };
+        return iterator{ m_data, size() };
     }
 
     iterator end() noexcept {
-        return iterator{ nullptr };
+        return iterator{ nullptr, nullptr };
     }
 
     const_iterator cbegin() const noexcept {
-        return const_iterator{ m_data };
+        return const_iterator{ m_data, !empty() ? &m_data[size() - 1] : nullptr };
     }
 
     const_iterator cend() const noexcept {
-        return const_iterator{ nullptr };
+        return const_iterator{ nullptr, nullptr };
     }
 
     CLinkedVector() = default;
@@ -75,7 +81,7 @@ public:
     void clear() noexcept {
         if (!empty()) {
             for (std::size_t i; i < capacity(); ++i) {
-                m_alloc.destroy(&m_data[i]);
+                m_data[i].~T();
             }
 
             m_alloc.deallocate(m_data, capacity());
@@ -94,7 +100,7 @@ public:
 
     const T &at(std::size_t idx) const {
         if (idx >= size() || idx < 0)
-            throw std::out_of_range();
+            throw std::out_of_range("");
 
         return *m_data[idx];
     }
@@ -108,12 +114,12 @@ public:
             auto buffer = m_alloc.allocate(size());
 
             for (std::size_t i; i < size(); ++i) {
-                m_alloc.construct(buffer[i]);
+                m_alloc.construct(&buffer[i]);
                 buffer[i] = m_data[i];
 
-                m_alloc.destroy(&m_data[i]);
+                m_data[i].~T();
             }
-            m_alloc.dealocate(m_data);
+            m_alloc.deallocate(m_data, capacity());
 
             m_data = buffer;
             m_capacity = size();
@@ -130,8 +136,17 @@ public:
     }
 
     void reserve(std::size_t count) noexcept {
+        if (!m_data) {
+            m_data = m_alloc.allocate(capacity() + count);
+        } else {
+            auto temp = m_alloc.allocate(capacity() + count);
+            std::memcpy(temp, m_data, sizeof(T) * size());
+            m_alloc.deallocate(m_data, capacity());
+
+            m_data = temp;
+        }
+
         m_capacity += count;
-//        reserveNodes(count);
     }
 
 private:

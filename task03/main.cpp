@@ -8,38 +8,36 @@ static constexpr auto kCountElements = 10;  // max 10 elements
 int main(int, char**) {   
     try {
         // 1 - default allocator
-        /*std::map<int, int> mapDefaultAllocator;
+        std::map<int, int> mapDefaultAllocator;
         for (int i = 0; i < kCountElements; ++i) {
             mapDefaultAllocator.emplace(std::make_pair(i, fact(i)));
-        }*/
+        }
 
-        //print(mapDefaultAllocator);
+        print(mapDefaultAllocator);
 
         // 2 - custom allocator
-        /*std::map<int, int, std::less<int>, CCustomAllocator<std::pair<int, int> > > mapCustomAllocator;
+        std::map<int, int, std::less<int>, CCustomAllocator<std::pair<int, int> > > mapCustomAllocator;
         for (int i = 0; i < kCountElements; ++i) {
             mapCustomAllocator.emplace(std::make_pair(i, fact(i)));
-        }*/
+        }
 
-        //print(mapCustomAllocator);
+        print(mapCustomAllocator);
 
         // 3 - custom container
-        /*CLinkedVector<int> customContainer;
+        CLinkedVector<int> customContainer;
         for (int i = 0; i < kCountElements; ++i) {
             customContainer.push_back(i);
-        }*/
+        }
 
-        //print(customContainer);
+        print(customContainer);
 
         // 4 - custom container with custom allocator
-        CLinkedVector<int/*, CCustomAllocator<int>*/ > customContainerAlloc;
-        customContainerAlloc.reserve(kCountElements);
+        CLinkedVector<int, CCustomAllocator<int>, 1> customContainerAlloc;
         for (int i = 0; i < kCountElements; ++i) {
             customContainerAlloc.push_back(i);
         }
 
-        print(customContainerAlloc);
-
+        //print(customContainerAlloc);
         std::cout.flush();
     } catch (std::exception &e) {
         std::cout << e.what() << std::endl;
